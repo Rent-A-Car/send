@@ -28,10 +28,10 @@ self.addEventListener('fetch', async event => {
 		if (location.hostname == url.hostname && url.pathname == "/") {
 			url.search = ""
 			nreq = new Request(url.toString(),{...req})
-		}
-		const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
-		if (StaticCachedResponse){
-			event.respondWith(e=>StaticCachedResponse);
+			event.respondWith(e=>{
+				const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
+				return StaticCachedResponse
+			});
 		}
 		
 	}
