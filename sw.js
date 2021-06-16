@@ -18,19 +18,21 @@ self.addEventListener('activate', async event => {
 	});
 	await Promise.all(checkKeys);
 });
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', async event => {
 	if (event.request.method == "GET") {
-		event.respondWith(async e => {
-			const req = event.request
-			const cacheS = await caches.open(Static_CACHE);
-			let url = new URL(req.url),
-    			nreq;
-    			if (location.hostname == url.hostname && url.pathname == "/") {
-				url.search = ""
-        			nreq = new Request(url.toString(),{...req})
-    			}
-			const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
-			return StaticCachedResponse || await fetch(event.request);
-		});
+		debugger
+		const req = event.request
+		const cacheS = await caches.open(Static_CACHE);
+		let url = new URL(req.url),
+		    nreq;
+		if (location.hostname == url.hostname && url.pathname == "/") {
+			url.search = ""
+			nreq = new Request(url.toString(),{...req})
+		}
+		const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
+		if (StaticCachedResponse){
+			event.respondWith(e=>StaticCachedResponse);
+		}
+		
 	}
 });
