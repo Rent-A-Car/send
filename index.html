@@ -119,9 +119,10 @@
          a.href = whatsapp(getParameterByName("n"),getParameterByName("m"))
          svg.setAttribute('href', "#whatsapp")
          }
-         navigator.serviceWorker.ready.then((reg)=>{ 
-         location.href = a.href || null
-         });
+         
+         if (a.href){
+            location.href = a.href
+         }
          
          
          
