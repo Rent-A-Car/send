@@ -27,6 +27,9 @@ self.addEventListener('fetch', event => {
 		
 	}
 });
-function getweb(req){
-	return fetch(req)
+async function getweb(req){
+	const cacheS = await caches.open(Static_CACHE);
+	const StaticCachedResponse = await cacheS.match(req,{ignoreSearch:true});
+
+	return StaticCachedResponse || fetch(req);
 }
