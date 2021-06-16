@@ -20,15 +20,14 @@ self.addEventListener('activate', async event => {
 });
 self.addEventListener('fetch', async event => {
 	if (event.request.method == "GET") {
-		debugger
 		const req = event.request
-		const cacheS = await caches.open(Static_CACHE);
 		let url = new URL(req.url),
 		    nreq;
 		if (location.hostname == url.hostname && url.pathname == "/") {
 			url.search = ""
 			nreq = new Request(url.toString(),{...req})
 			event.respondWith(async e=>{
+				const cacheS = await caches.open(Static_CACHE);
 				const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
 				return StaticCachedResponse
 			});
