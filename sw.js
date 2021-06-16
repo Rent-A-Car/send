@@ -1,4 +1,4 @@
-const Static_CACHE = 'static-' + '21-06-16-n'
+const Static_CACHE = 'static-' + '21-06-16'
 const Static_CACHEAssets = [
 	'/',
 	'https://msng.link/assets/css/bootstrap.min.css',
