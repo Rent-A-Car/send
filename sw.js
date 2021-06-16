@@ -20,16 +20,13 @@ self.addEventListener('activate', async event => {
 });
 self.addEventListener('fetch', event => {
 	if (event.request.method == "GET") {
-		const req = event.request
-		let url = new URL(req.url)
+		let url = new URL(event.request.url)
 		if (location.hostname == url.hostname && url.pathname == "/") {
-			event.respondWith(async e=>{
-				const cacheS = await caches.open(Static_CACHE);
-				const StaticCachedResponse = await cacheS.match(req,{ignoreSearch:true});
-				console.log(e,req)
-				return StaticCachedResponse
-			});
+			event.respondWith(getweb(event.request));
 		}
 		
 	}
 });
+function getweb(req){
+	return fetch(req)
+}
