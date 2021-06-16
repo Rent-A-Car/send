@@ -25,7 +25,7 @@ self.addEventListener('fetch', event => {
         event.respondWith(async e=>{
           const cacheS = await caches.open(Static_CACHE);
           const StaticCachedResponse = await cacheS.match(event.request);
-          return StaticCachedResponse || fetch(event.request));
+          return StaticCachedResponse || fetch(event.request);
         });
     }
 });
