@@ -18,7 +18,7 @@ self.addEventListener('activate', async event => {
 	});
 	await Promise.all(checkKeys);
 });
-self.addEventListener('fetch', async event => {
+self.addEventListener('fetch', event => {
 	if (event.request.method == "GET") {
 		const req = event.request
 		let url = new URL(req.url)
