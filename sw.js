@@ -1,4 +1,4 @@
-const Static_CACHE = 'static-' + '21-06-14'
+const Static_CACHE = 'static-'+'21-06-16'
 const Static_CACHEAssets = [
     '/',
     'https://msng.link/assets/css/bootstrap.min.css',
@@ -8,7 +8,6 @@ self.addEventListener('install', async event => {
     self.skipWaiting();
     const cache = await caches.open(Static_CACHE);
     await cache.addAll(Static_CACHEAssets);
-    console.log('Service worker встановлено');
 });
 self.addEventListener('activate', async event => {
     const cachesKeys = await caches.keys();
@@ -18,7 +17,6 @@ self.addEventListener('activate', async event => {
         }
     });
     await Promise.all(checkKeys);
-    console.log('Service worker актевовано (видалено застарілий кеш)');
 });
 self.addEventListener('fetch', event => {
     if (event.request.method == "GET") {
