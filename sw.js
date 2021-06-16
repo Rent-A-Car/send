@@ -1,4 +1,4 @@
-const Static_CACHE = 'static-' + '21-06-16'
+const Static_CACHE = 'static-' + '21-06-16-n'
 const Static_CACHEAssets = [
 	'/',
 	'https://msng.link/assets/css/bootstrap.min.css',
@@ -21,9 +21,16 @@ self.addEventListener('activate', async event => {
 self.addEventListener('fetch', event => {
 	if (event.request.method == "GET") {
 		event.respondWith(async e => {
+			const req = event.request
 			const cacheS = await caches.open(Static_CACHE);
-			const StaticCachedResponse = await cacheS.match(event.request);
-			return StaticCachedResponse || fetch(event.request);
+			let url = new URL(req.url),
+    			nreq;
+    			if (location.hostname == url.hostname && url.pathname == "/") {
+				url.search = ""
+        			nreq = new Request(url.toString(),{...req})
+    			}
+			const StaticCachedResponse = await cacheS.match((nreq) ? nreq : req);
+			return StaticCachedResponse || await fetch(event.request);
 		});
 	}
 });
