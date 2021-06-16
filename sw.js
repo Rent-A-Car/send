@@ -22,12 +22,11 @@ self.addEventListener('fetch', async event => {
 	if (event.request.method == "GET") {
 		const req = event.request
 		let url = new URL(req.url)
-		debugger
 		if (location.hostname == url.hostname && url.pathname == "/") {
 			event.respondWith(async e=>{
 				const cacheS = await caches.open(Static_CACHE);
-				const StaticCachedResponse = await cacheS.match("/");
-				debugger
+				const StaticCachedResponse = await cacheS.match(req,{ignoreSearch:true});
+				console.log(e,req)
 				return StaticCachedResponse
 			});
 		}
